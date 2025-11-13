@@ -26,7 +26,7 @@ jobs:
             - run: testim --token "kfNCskJqMR6495AvQk5KkbO4WiEmihhGZT3JVQ5hQYgS1GV63A" --project "gjfyGVg1EaZekoHa4Wu6" --grid "Testim-Grid" --mode "extension" --branch "${{ inputs.branch || 'master' }}" --label "${{ inputs.label || 'CI-Sanity' }}" || true
             - name: Upload Testim artifacts
               if: always()
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: testim-results
                 path: |
@@ -36,4 +36,3 @@ jobs:
                   screenshots/
                 if-no-files-found: ignore
                 retention-days: 30
-
