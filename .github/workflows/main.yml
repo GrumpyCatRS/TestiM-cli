@@ -23,16 +23,13 @@ jobs:
                 node-version: 'lts/*'
                 # You can also change 'lts/*' to any supported LTS Node.js version.
             - run: npm install -g @testim/testim-cli
-            - run: testim --token "kfNCskJqMR6495AvQk5KkbO4WiEmihhGZT3JVQ5hQYgS1GV63A" --project "gjfyGVg1EaZekoHa4Wu6" --grid "Testim-Grid" --mode "extension" --branch "${{ inputs.branch || 'master' }}" --label "${{ inputs.label || 'CI-Sanity' }}" || true
-            - name: Upload Testim artifacts
+            - name: Run Testim CLI
+              run: testim --token "kfNCskJqMR6495AvQk5KkbO4WiEmihhGZT3JVQ5hQYgS1GV63A" --project "gjfyGVg1EaZekoHa4Wu6" --grid "Testim-Grid" --mode "extension" --branch "${{ inputs.branch || 'master' }}" --label "${{ inputs.label || 'CI-Sanity' }}" 2>&1 | tee testim-output.log || true
+            - name: Upload Testim output
               if: always()
               uses: actions/upload-artifact@v4
               with:
-                name: testim-results
-                path: |
-                  testim-results/
-                  testim-logs/
-                  *.log
-                  screenshots/
+                name: testim-output
+                path: testim-output.log
                 if-no-files-found: ignore
                 retention-days: 30
