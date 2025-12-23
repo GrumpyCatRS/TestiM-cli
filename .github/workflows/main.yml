@@ -1,34 +1,34 @@
 name: Testim E2E
-# Triggers manually with inputs
-on: 
+on:
+  push:
   workflow_dispatch:
     inputs:
-      testim_branch:
-        description: 'Branch to run tests on'
-        required: true
+      branch:
+        description: 'Branch to run'
+        required: false
         default: 'master'
-      testim_suites:
-        description: 'Suites to run (comma-separated for multiple)'
-        required: true
-        default: 'Manual test cases automated - DEV'
+      suite:
+        description: 'Suite to run'
+        required: false
+        default: 'Reg/Subs wall sanity - dev'
 
 jobs:
   run-testimio-cli:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 'lts'
       
       - run: npm install -g @testim/testim-cli
       
+      # Uses input if provided (manual run), otherwise falls back to defaults (push run)
       - run: |
           testim \
-          --token "${{ secrets.TESTIM_TOKEN }}" \
-          --project "${{ secrets.TESTIM_PROJECT_ID }}" \
+          --token "kfNCskJqMR6495AvQk5KkbO4WiEmihhGZT3JVQ5hQYgS1GV63A" \
+          --project "gjfyGVg1EaZekoHa4Wu6" \
           --grid "Testim-Grid" \
           --mode "extension" \
-          --branch "${{ inputs.testim_branch }}" \
-          --suite "${{ inputs.testim_suites }}"
+          --branch "${{ inputs.branch || 'master' }}" \
+          --suite "${{ inputs.suite || 'Reg/Subs wall sanity - dev' }}"
