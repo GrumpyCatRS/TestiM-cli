@@ -32,6 +32,7 @@ jobs:
           --project "gjfyGVg1EaZekoHa4Wu6" \
           --grid "Testim-Grid" \
           --mode "extension" \
-          --test-plan "STG2_Regression" \
+          --test-plan "${{ inputs.test_plan || 'STG2_Regression' }}" \
+          --retries 1 \
           --parallel 8 \
           --branch "${{ inputs.branch || 'master' }}" \
