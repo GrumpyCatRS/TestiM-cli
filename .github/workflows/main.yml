@@ -32,5 +32,6 @@ jobs:
           --project "gjfyGVg1EaZekoHa4Wu6" \
           --grid "Testim-Grid" \
           --mode "extension" \
+          --test-plan "STG2_Regression" \
+          --parallel 4 \
           --branch "${{ inputs.branch || 'master' }}" \
-          --suite "${{ inputs.suite || 'Reg/Subs wall sanity - dev' }}"
