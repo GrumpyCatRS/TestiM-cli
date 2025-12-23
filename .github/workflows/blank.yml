@@ -5,12 +5,12 @@ on:
     inputs:
       branch:
         description: 'Branch to run'
-        required: false
+        required: true
         default: 'master'
-      suite:
-        description: 'Suite to run'
-        required: false
-        default: 'Reg/Subs wall sanity - dev'
+      test_plan:
+        description: 'Test_plan to run'
+        required: true
+        default: 'STG2_Regression'
 
 jobs:
   run-testimio-cli:
