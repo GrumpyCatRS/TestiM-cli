@@ -1,0 +1,38 @@
+name: Testim E2E
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run'
+        required: false
+        default: 'master'
+      suite:
+        description: 'Suite to run'
+        required: false
+        default: 'Reg/Subs wall sanity - dev'
+
+jobs:
+  run-testimio-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      # FIX: Use specific version '20' instead of 'lts' to avoid the download error
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install -g @testim/testim-cli
+
+      # Uses input if provided (manual run), otherwise falls back to defaults (push run)
+      - run: |
+          testim \
+          --token "kfNCskJqMR6495AvQk5KkbO4WiEmihhGZT3JVQ5hQYgS1GV63A" \
+          --project "gjfyGVg1EaZekoHa4Wu6" \
+          --grid "Testim-Grid" \
+          --mode "extension" \
+          --test-plan "${{ inputs.test_plan || 'STG2_Regression' }}" \
+          --retries 1 \
+          --parallel 8 \
+          --branch "${{ inputs.branch || 'master' }}" \
