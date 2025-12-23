@@ -33,5 +33,5 @@ jobs:
           --grid "Testim-Grid" \
           --mode "extension" \
           --test-plan "STG2_Regression" \
-          --parallel 4 \
+          --parallel 8 \
           --branch "${{ inputs.branch || 'master' }}" \
