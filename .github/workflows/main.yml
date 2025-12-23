@@ -1,5 +1,16 @@
 name: Testim E2E
-on: [push]
+# Triggers manually with inputs
+on: 
+  workflow_dispatch:
+    inputs:
+      testim_branch:
+        description: 'Branch to run tests on'
+        required: true
+        default: 'master'
+      testim_suites:
+        description: 'Suites to run (comma-separated for multiple)'
+        required: true
+        default: 'Manual test cases automated - DEV'
 
 jobs:
   run-testimio-cli:
@@ -13,12 +24,11 @@ jobs:
       
       - run: npm install -g @testim/testim-cli
       
-      # Run specific Testim Suites
       - run: |
           testim \
           --token "${{ secrets.TESTIM_TOKEN }}" \
           --project "${{ secrets.TESTIM_PROJECT_ID }}" \
           --grid "Testim-Grid" \
           --mode "extension" \
-          --branch "master" \
-          --suite "Manual test cases automated - DEV"
+          --branch "${{ inputs.testim_branch }}" \
+          --suite "${{ inputs.testim_suites }}"
